@@ -107,7 +107,46 @@ view: lxp_apis_metrics {
     sql: ${TABLE}.user_id ;;
   }
   measure: count {
+    group_label: "Count"
     type: count
     drill_fields: [source_name, host_name]
+  }
+  measure: count_of_api_calls {
+    group_label: "Count"
+    type: number
+    sql: count(${TABLE}.request_id) ;;
+  }
+  measure: distinct_api_calls {
+    group_label: "Count Distinct"
+    type: count_distinct
+    sql: ${TABLE}.request_id ;;
+  }
+  measure: total_success {
+    group_label: "Other Aggregations"
+    type: sum
+    sql: (case when cast(${success} as string) = 'true' then 1 else 0 end) ;;
+  }
+  measure: total_error {
+    group_label: "Other Aggregations"
+    type: sum
+    sql: (case when cast(${success} as string)  = 'false' then 1 else 0 end) ;;
+  }
+  measure: overall_success_error {
+    group_label: "Other Aggregations"
+    label: "Total Response "
+    type: number
+    sql: ${total_success} + ${total_error} ;;
+  }
+  measure: success_rate {
+    group_label: "Other Aggregations"
+    type: number
+    sql: sum (case when cast(${success} as string) = 'true' then 1 else 0 end) / ${overall_success_error} ;;
+    value_format_name: percent_2
+  }
+  measure: error_rate {
+    group_label: "Other Aggregations"
+    type: number
+    sql: sum (case when cast(${success} as string) = 'false' then 1 else 0 end) / ${overall_success_error} ;;
+    value_format_name: percent_2
   }
 }
