@@ -109,44 +109,81 @@ view: lxp_apis_metrics {
   measure: count {
     group_label: "Count"
     type: count
-    drill_fields: [source_name, host_name]
+    drill_fields: [detail*]
   }
   measure: count_of_api_calls {
     group_label: "Count"
     type: number
     sql: count(${TABLE}.request_id) ;;
+    drill_fields: [detail*]
   }
   measure: distinct_api_calls {
     group_label: "Count Distinct"
     type: count_distinct
     sql: ${TABLE}.request_id ;;
+    drill_fields: [detail*]
   }
   measure: total_success {
     group_label: "Other Aggregations"
     type: sum
     sql: (case when cast(${success} as string) = 'true' then 1 else 0 end) ;;
+    drill_fields: [detail*]
   }
   measure: total_error {
     group_label: "Other Aggregations"
     type: sum
     sql: (case when cast(${success} as string)  = 'false' then 1 else 0 end) ;;
+    drill_fields: [detail*]
   }
   measure: overall_success_error {
     group_label: "Other Aggregations"
     label: "Total Response "
     type: number
     sql: ${total_success} + ${total_error} ;;
+    drill_fields: [detail*]
   }
   measure: success_rate {
     group_label: "Other Aggregations"
     type: number
     sql: sum (case when cast(${success} as string) = 'true' then 1 else 0 end) / ${overall_success_error} ;;
     value_format_name: percent_2
+    drill_fields: [detail*]
   }
   measure: error_rate {
     group_label: "Other Aggregations"
     type: number
     sql: sum (case when cast(${success} as string) = 'false' then 1 else 0 end) / ${overall_success_error} ;;
     value_format_name: percent_2
+    drill_fields: [detail*]
+  }
+
+    set: detail {
+      fields: [
+        request_id,
+        api_version,
+        environment,
+        organization_id,
+        host_name,
+        category,
+        api_endpoint,
+        request_method,
+        request_body,
+        response_code,
+        error_message,
+        success,
+        response_time_ms,
+        client_ip_address,
+        user_id,
+        request_headers,
+        response_headers,
+        request_url_parameters,
+        request_size_bytes,
+        response_size_bytes,
+        geolocation_data,
+        user_agent,
+        internal_app,
+        timestamp_time,
+        source_id,
+        source_name]
   }
 }
