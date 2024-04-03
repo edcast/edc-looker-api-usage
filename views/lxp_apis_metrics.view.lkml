@@ -123,6 +123,12 @@ view: lxp_apis_metrics {
     sql: ${TABLE}.request_id ;;
     drill_fields: [detail*]
   }
+  measure: distinct_request {
+    group_label: "Count Distinct"
+    type: count_distinct
+    sql: ${TABLE}.request_id ;;
+    drill_fields: [host_name,category,distinct_request]
+  }
   measure: total_success {
     group_label: "Other Aggregations"
     type: sum
@@ -156,7 +162,6 @@ view: lxp_apis_metrics {
     value_format_name: percent_2
     drill_fields: [detail*]
   }
-
     set: detail {
       fields: [
         request_id,
