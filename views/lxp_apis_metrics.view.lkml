@@ -125,6 +125,7 @@ view: lxp_apis_metrics {
   }
   measure: distinct_request {
     group_label: "Count Distinct"
+    label: "Total API Request"
     type: count_distinct
     sql: ${TABLE}.request_id ;;
     drill_fields: [host_name,category,distinct_request]
