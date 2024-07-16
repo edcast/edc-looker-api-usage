@@ -735,12 +735,13 @@
   - name: Category
     title: Category
     type: field_filter
-    default_value: "-NULL"
+    default_value: ''
     allow_multiple_values: true
     required: false
     ui_config:
       type: advanced
       display: popover
+      options: []
     model: api_usage
     explore: lxp_apis_metrics
     listens_to_filters: []
