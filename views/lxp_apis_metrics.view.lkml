@@ -1,5 +1,5 @@
 view: lxp_apis_metrics {
-  sql_table_name: `aws-us-east-1-qa-01.api_usage_aws_qa.lxp_apis_metrics` ;;
+  sql_table_name: `{{_user_attributes['database']}}.lxp_apis_metrics` ;;
 
   dimension: api_endpoint {
     type: string
