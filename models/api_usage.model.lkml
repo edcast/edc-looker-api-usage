@@ -1,6 +1,7 @@
 connection: "concord_dawn"
 
 include: "/views/*.view.lkml"
+include: "/dashboard/api_usage.dashboard.lookml"
 
 explore: lxp_apis_metrics {
   view_label: "LXP API Metrics"
