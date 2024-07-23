@@ -682,12 +682,12 @@
   - name: Date
     title: Date
     type: field_filter
-    default_value: ''
+    default_value: 30 day
     allow_multiple_values: true
     required: false
     ui_config:
-      type: advanced
-      display: popover
+      type: relative_timeframes
+      display: inline
       options: []
     model: api_usage
     explore: lxp_apis_metrics
@@ -757,7 +757,7 @@
       display: popover
     model: api_usage
     explore: lxp_apis_metrics
-    listens_to_filters: []
+    listens_to_filters: [API Version, Category]
     field: lxp_apis_metrics.api_endpoint
   - name: Response Code
     title: Response Code
